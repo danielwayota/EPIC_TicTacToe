@@ -22,18 +22,23 @@ public class GameManager : MonoBehaviour
 
     public Cell[,] cells;
 
+    private bool paused;
+
     /// ===========================================
     /// <summary>
     ///
     /// </summary>
     void Start()
     {
+        this.paused = false;
+
         this.cameraController = FindObjectOfType<CameraController>();
         this.cameraController.SetSize(this.size);
 
+        // Generate the board and store the data
         float offset = (this.size - 1) / 2f;
-        this.board = new CellState[this.size, this.size];
 
+        this.board = new CellState[this.size, this.size];
         this.cells = new Cell[this.size, this.size];
 
         for (int i = 0; i < this.size; i++)
@@ -57,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     /// ===========================================
     /// <summary>
-    ///
+    /// Creates each player data
     /// </summary>
     void SetUpPlayers()
     {
@@ -76,6 +81,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (this.paused)
+        {
+            return;
+        }
+
         var currentPlayer = this.players[this.turn];
 
         if (currentPlayer.DoTheTurn())
@@ -102,6 +112,8 @@ public class GameManager : MonoBehaviour
             var cell = this.cells[i, j];
 
             Instantiate(player.piecePrefab, cell.transform.position, Quaternion.identity);
+
+            cell.Disable();
 
             return true;
         }

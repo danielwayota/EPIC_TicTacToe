@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardCoordinates: {x: 0, y: 0}
+  collisionBox: {fileID: 2244474162173428857}
 --- !u!65 &2244474162173428857
 BoxCollider:
   m_ObjectHideFlags: 0
