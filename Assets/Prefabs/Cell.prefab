@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3499669704998985797}
   - component: {fileID: 5359788942316360741}
+  - component: {fileID: 2244474162173428857}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -123,3 +124,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896c3f4cd9fcba24abcccf8b16ba2cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardCoordinates: {x: 0, y: 0}
+--- !u!65 &2244474162173428857
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3499669704998985796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 0.7, z: 0.25}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -247,9 +247,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ab577c38cb644b87a6f04f81b73e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crossPrefab: {fileID: 9177489059255190442, guid: 7c315b91c06331c48b933fa18eaa2365,
+    type: 3}
+  circlePrefab: {fileID: 118741209411940486, guid: af8689d06cc51c74daefd1cc295fce89,
+    type: 3}
   cellPrefab: {fileID: 3499669704998985796, guid: ea7b5c93c25ecc8468599ab3d6cfb99d,
     type: 3}
-  size: 4
+  size: 3
 --- !u!1 &1997969450
 GameObject:
   m_ObjectHideFlags: 0

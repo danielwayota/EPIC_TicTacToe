@@ -2,7 +2,7 @@
 
 public class CameraController : MonoBehaviour
 {
-    private Camera targetCamera;
+    public Camera targetCamera { get; protected set; }
 
     /// ===========================================
     /// <summary>
