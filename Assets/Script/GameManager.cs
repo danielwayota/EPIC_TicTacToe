@@ -5,18 +5,6 @@ public enum CellState
     NONE, CIRCLE, CROSS
 }
 
-public struct Player
-{
-    public CellState state;
-    public GameObject piecePrefab;
-
-    public Player(CellState state, GameObject piecePrefab)
-    {
-        this.state = state;
-        this.piecePrefab = piecePrefab;
-    }
-}
-
 public class GameManager : MonoBehaviour
 {
     public GameObject crossPrefab;
@@ -28,10 +16,13 @@ public class GameManager : MonoBehaviour
     public GameObject cellPrefab;
     public int size;
 
-    private CellState[,] board;
+    public CellState[,] board { get; protected set; }
 
-    private CameraController cameraController;
+    public CameraController cameraController { get; protected set; }
 
+    public Cell[,] cells;
+
+    /// ===========================================
     /// <summary>
     ///
     /// </summary>
@@ -43,6 +34,8 @@ public class GameManager : MonoBehaviour
         float offset = (this.size - 1) / 2f;
         this.board = new CellState[this.size, this.size];
 
+        this.cells = new Cell[this.size, this.size];
+
         for (int i = 0; i < this.size; i++)
         {
             for (int j = 0; j < this.size; j++)
@@ -52,50 +45,67 @@ public class GameManager : MonoBehaviour
                 go.transform.position = new Vector3(i - offset, j - offset, 0);
                 go.transform.SetParent(this.transform);
 
-                go.GetComponent<Cell>().boardCoordinates = new Vector2Int(i, j);
+                var cell = go.GetComponent<Cell>();
+                cell.boardCoordinates = new Vector2Int(i, j);
+
+                this.cells[i, j] = cell;
             }
         }
 
         this.SetUpPlayers();
     }
 
+    /// ===========================================
+    /// <summary>
+    ///
+    /// </summary>
     void SetUpPlayers()
     {
         this.players = new Player[]
         {
-            new Player(CellState.CROSS, this.crossPrefab),
-            new Player(CellState.CIRCLE, this.circlePrefab),
+            new HumanPlayer(CellState.CROSS, this.crossPrefab, this),
+            new HumanPlayer(CellState.CIRCLE, this.circlePrefab, this),
         };
 
         this.turn = 0;
     }
 
+    /// ===========================================
+    /// <summary>
+    ///
+    /// </summary>
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        var currentPlayer = this.players[this.turn];
+
+        if (currentPlayer.DoTheTurn())
         {
-            var mouse = Input.mousePosition;
-            Ray ray = this.cameraController.targetCamera.ScreenPointToRay(mouse);
-
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                var posibleCell = hit.collider.gameObject;
-                Cell cell = posibleCell.GetComponent<Cell>();
-
-                Vector2Int coordinates = cell.boardCoordinates;
-
-                CellState cellState = this.board[coordinates.x, coordinates.y];
-                if (cellState == CellState.NONE)
-                {
-                    var player = this.players[this.turn];
-
-                    this.board[coordinates.x, coordinates.y] = player.state;
-                    Instantiate(player.piecePrefab, posibleCell.transform.position, Quaternion.identity);
-
-                    this.turn = (this.turn + 1) % this.players.Length;
-                }
-            }
+            this.turn = (this.turn + 1) % this.players.Length;
         }
+    }
+
+    /// ===========================================
+    /// <summary>
+    /// Insert the piece if the cell is none
+    /// </summary>
+    /// <param name="i"></param>
+    /// <param name="j"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public bool AllocatePiece(int i, int j, Player player)
+    {
+        CellState cellState = this.board[i, j];
+
+        if (cellState == CellState.NONE)
+        {
+            this.board[i, j] = player.state;
+            var cell = this.cells[i, j];
+
+            Instantiate(player.piecePrefab, cell.transform.position, Quaternion.identity);
+
+            return true;
+        }
+
+        return false;
     }
 }
