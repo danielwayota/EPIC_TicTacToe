@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     // Board
     public GameObject cellPrefab;
 
-    public int size;
+    private int size = 0;
     public CellPlayer[,] board { get; protected set; }
     public Cell[,] cells;
 
@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        this.size = Config.current.size == BoardSize.SMALL ? 3 : 4;
+
         this.paused = false;
 
         this.cameraController = FindObjectOfType<CameraController>();
@@ -83,11 +85,23 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void SetUpPlayers()
     {
-        this.players = new Player[]
+        switch (Config.current.mode)
         {
-            new HumanPlayer(CellPlayer.CROSS, this.crossPrefab, this),
-            new HumanPlayer(CellPlayer.CIRCLE, this.circlePrefab, this),
-        };
+            case GameMode.PLAYER_VS_PLAYER:
+                this.players = new Player[]
+                    {
+                        new HumanPlayer(CellPlayer.CROSS, this.crossPrefab, this),
+                        new HumanPlayer(CellPlayer.CIRCLE, this.circlePrefab, this),
+                    };
+                break;
+            case GameMode.PLAYER_VS_AI:
+                this.players = new Player[]
+                    {
+                        new HumanPlayer(CellPlayer.CROSS, this.crossPrefab, this),
+                        new AIPlayer(CellPlayer.CIRCLE, this.circlePrefab, this),
+                    };
+                break;
+        }
 
         this.turn = Random.Range(0, this.players.Length);
 
@@ -109,24 +123,20 @@ public class GameManager : MonoBehaviour
 
         if (currentPlayer.DoTheTurn())
         {
-            bool gameOver = this.CheckGameOver();
+            this.finalLine = this.CheckLines();
 
-            if (gameOver)
+            if (this.finalLine != null)
+            {
+                Debug.Log("LINE: " + this.finalLine.ToString());
+                this.paused = true;
+
+                ScoreStorage.PlayerWin(this.turn);
+                this.playerDisplay.UpdateScores();
+            }
+            else if (this.CheckGameOver())
             {
                 // TODO: Show some thing
                 this.paused = true;
-            }
-            else
-            {
-                this.finalLine = this.CheckLines();
-                if (this.finalLine != null)
-                {
-                    Debug.Log("LINE: " + this.finalLine.ToString());
-                    this.paused = true;
-
-                    ScoreStorage.PlayerWin(this.turn);
-                    this.playerDisplay.UpdateScores();
-                }
             }
 
             this.turn = (this.turn + 1) % this.players.Length;

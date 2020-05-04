@@ -22,6 +22,6 @@ public class Player
     /// <returns>Has finish the turn?</returns>
     public virtual bool DoTheTurn()
     {
-        return false;
+        throw new System.NotImplementedException();
     }
 }
