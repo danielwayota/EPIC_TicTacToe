@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
             new HumanPlayer(CellPlayer.CIRCLE, this.circlePrefab, this),
         };
 
-        this.turn = 0;
+        this.turn = Random.Range(0, this.players.Length);
 
         this.playerDisplay.UpdateScores();
     }
