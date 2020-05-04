@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class HumanPlayer : Player
 {
-    public HumanPlayer(CellState state, GameObject piecePrefab, GameManager manager)
+    /// ===========================================
+    public HumanPlayer(CellPlayer state, GameObject piecePrefab, GameManager manager)
         : base(state, piecePrefab, manager)
     {
     }
 
+    /// ===========================================
     /// <summary>
     ///
     /// </summary>

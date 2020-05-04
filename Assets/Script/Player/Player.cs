@@ -2,18 +2,20 @@
 
 public class Player
 {
-    public CellState state { get; protected set; }
+    public CellPlayer state { get; protected set; }
     public GameObject piecePrefab { get; protected set; }
 
     protected GameManager manager;
 
-    public Player(CellState state, GameObject piecePrefab, GameManager manager)
+    /// ===========================================
+    public Player(CellPlayer state, GameObject piecePrefab, GameManager manager)
     {
         this.state = state;
         this.piecePrefab = piecePrefab;
         this.manager = manager;
     }
 
+    /// ===========================================
     /// <summary>
     ///
     /// </summary>
