@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     private Player[] players;
 
+    // GamePlay
+    private bool paused;
+
     private int _turn;
     private int turn
     {
@@ -20,22 +23,21 @@ public class GameManager : MonoBehaviour
         {
             this._turn = value;
 
-            this.turnDisplay.SetTurn(this._turn);
+            this.playerDisplay.SetTurn(this._turn);
         }
     }
 
+    // Board
     public GameObject cellPrefab;
-    public int size;
 
+    public int size;
     public CellPlayer[,] board { get; protected set; }
+    public Cell[,] cells;
 
     public CameraController cameraController { get; protected set; }
 
-    public Cell[,] cells;
-
-    private bool paused;
-
-    private TurnDisplay turnDisplay;
+    // UI
+    private PlayerDisplay playerDisplay;
 
     /// ===========================================
     /// <summary>
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
         this.cameraController = FindObjectOfType<CameraController>();
         this.cameraController.SetSize(this.size);
 
-        this.turnDisplay = FindObjectOfType<TurnDisplay>();
+        this.playerDisplay = FindObjectOfType<PlayerDisplay>();
 
         // Generate the board and store the data
         float offset = (this.size - 1) / 2f;
@@ -88,6 +90,8 @@ public class GameManager : MonoBehaviour
         };
 
         this.turn = 0;
+
+        this.playerDisplay.UpdateScores();
     }
 
     /// ===========================================
@@ -119,6 +123,9 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("LINE: " + this.finalLine.ToString());
                     this.paused = true;
+
+                    ScoreStorage.PlayerWin(this.turn);
+                    this.playerDisplay.UpdateScores();
                 }
             }
 
