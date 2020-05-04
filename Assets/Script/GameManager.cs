@@ -11,7 +11,18 @@ public class GameManager : MonoBehaviour
     public GameObject circlePrefab;
 
     private Player[] players;
-    private int turn;
+
+    private int _turn;
+    private int turn
+    {
+        get => this._turn;
+        set
+        {
+            this._turn = value;
+
+            this.turnDisplay.SetTurn(this._turn);
+        }
+    }
 
     public GameObject cellPrefab;
     public int size;
@@ -24,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     private bool paused;
 
+    private TurnDisplay turnDisplay;
+
     /// ===========================================
     /// <summary>
     ///
@@ -34,6 +47,8 @@ public class GameManager : MonoBehaviour
 
         this.cameraController = FindObjectOfType<CameraController>();
         this.cameraController.SetSize(this.size);
+
+        this.turnDisplay = FindObjectOfType<TurnDisplay>();
 
         // Generate the board and store the data
         float offset = (this.size - 1) / 2f;
@@ -90,8 +105,6 @@ public class GameManager : MonoBehaviour
 
         if (currentPlayer.DoTheTurn())
         {
-            this.turn = (this.turn + 1) % this.players.Length;
-
             bool gameOver = this.CheckGameOver();
 
             if (gameOver)
@@ -108,6 +121,8 @@ public class GameManager : MonoBehaviour
                     this.paused = true;
                 }
             }
+
+            this.turn = (this.turn + 1) % this.players.Length;
         }
     }
 
