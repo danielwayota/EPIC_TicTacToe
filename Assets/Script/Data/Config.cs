@@ -16,7 +16,7 @@ public class Config : MonoBehaviour
     public GameMode mode = GameMode.PLAYER_VS_PLAYER;
     public BoardSize size = BoardSize.SMALL;
 
-    public static Config _current;
+    private static Config _current;
     public static Config current
     {
         get
