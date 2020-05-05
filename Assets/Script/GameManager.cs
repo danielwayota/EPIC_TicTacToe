@@ -136,15 +136,19 @@ public class GameManager : MonoBehaviour
                 ScoreStorage.PlayerWin(this.turn);
                 this.playerDisplay.UpdateScores();
 
+                Debug.Log("Line: " + this.finalLine.ToString());
+
                 this.paused = true;
                 // TODO: Display the correct text
-                this.gameOverPanel.SetActive(false);
+                this.gameOverPanel.SetActive(true);
             }
             else if (this.CheckGameOver())
             {
+                Debug.Log("Locked: ");
+
                 this.paused = true;
                 // TODO: Display the correct text
-                this.gameOverPanel.SetActive(false);
+                this.gameOverPanel.SetActive(true);
             }
 
             this.turn = (this.turn + 1) % this.players.Length;
