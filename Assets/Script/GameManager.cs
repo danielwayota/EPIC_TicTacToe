@@ -7,8 +7,14 @@ public enum CellPlayer
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Prefabs")]
     public GameObject crossPrefab;
     public GameObject circlePrefab;
+
+    public GameObject cellPrefab;
+
+    [Header("Panel")]
+    public GameObject gameOverPanel;
 
     private Player[] players;
 
@@ -28,8 +34,6 @@ public class GameManager : MonoBehaviour
     }
 
     // Board
-    public GameObject cellPrefab;
-
     private int size = 0;
     public CellPlayer[,] board { get; protected set; }
     public Cell[,] cells;
@@ -45,6 +49,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        this.gameOverPanel.SetActive(false);
+
         this.size = Config.current.size == BoardSize.SMALL ? 3 : 4;
 
         this.paused = false;
@@ -127,16 +133,18 @@ public class GameManager : MonoBehaviour
 
             if (this.finalLine != null)
             {
-                Debug.Log("LINE: " + this.finalLine.ToString());
-                this.paused = true;
-
                 ScoreStorage.PlayerWin(this.turn);
                 this.playerDisplay.UpdateScores();
+
+                this.paused = true;
+                // TODO: Display the correct text
+                this.gameOverPanel.SetActive(false);
             }
             else if (this.CheckGameOver())
             {
-                // TODO: Show some thing
                 this.paused = true;
+                // TODO: Display the correct text
+                this.gameOverPanel.SetActive(false);
             }
 
             this.turn = (this.turn + 1) % this.players.Length;
