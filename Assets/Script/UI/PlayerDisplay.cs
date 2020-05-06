@@ -7,6 +7,8 @@ public class PlayerDisplay : MonoBehaviour
 
     public Text[] scoreLabels;
 
+    public Text[] playerLabels;
+
     public void SetTurn(int playerIndex)
     {
         foreach (var frame in this.turnFrames)
@@ -15,6 +17,11 @@ public class PlayerDisplay : MonoBehaviour
         }
 
         this.turnFrames[playerIndex].SetActive(true);
+    }
+
+    public void SetPlayerName(int playerIndex, string name)
+    {
+        this.playerLabels[playerIndex].text = name + ":";
     }
 
     public void UpdateScores()

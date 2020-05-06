@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class AIPlayer : Player
 {
+    public override string label => "Machine";
 
     private List<(int, int)> emptySpots;
 

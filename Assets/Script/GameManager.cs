@@ -109,6 +109,11 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        for (int i = 0; i < this.players.Length; i++)
+        {
+            this.playerDisplay.SetPlayerName(i, this.players[i].label);
+        }
+
         this.turn = Random.Range(0, this.players.Length);
 
         this.playerDisplay.UpdateScores();

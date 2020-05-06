@@ -2735,6 +2735,9 @@ MonoBehaviour:
   scoreLabels:
   - {fileID: 722206874}
   - {fileID: 518274600}
+  playerLabels:
+  - {fileID: 1129403093}
+  - {fileID: 1739632242}
 --- !u!1 &1965276093
 GameObject:
   m_ObjectHideFlags: 0

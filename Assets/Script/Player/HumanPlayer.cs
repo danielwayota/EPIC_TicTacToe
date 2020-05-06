@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HumanPlayer : Player
 {
+    public override string label => "Human";
+
     /// ===========================================
     public HumanPlayer(CellPlayer state, GameObject piecePrefab, GameManager manager)
         : base(state, piecePrefab, manager)
