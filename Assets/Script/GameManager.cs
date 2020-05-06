@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject cellPrefab;
 
     [Header("Panel")]
-    public GameObject gameOverPanel;
+    public GameOverUI gameOverUI;
 
     private Player[] players;
 
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        this.gameOverPanel.SetActive(false);
+        this.gameOverUI.Toggle(false);
 
         this.size = Config.current.size == BoardSize.SMALL ? 3 : 4;
 
@@ -136,19 +136,17 @@ public class GameManager : MonoBehaviour
                 ScoreStorage.PlayerWin(this.turn);
                 this.playerDisplay.UpdateScores();
 
-                Debug.Log("Line: " + this.finalLine.ToString());
-
                 this.paused = true;
-                // TODO: Display the correct text
-                this.gameOverPanel.SetActive(true);
+
+                this.gameOverUI.Toggle(true);
+                this.gameOverUI.ActivateVictory(this.turn);
             }
             else if (this.CheckGameOver())
             {
-                Debug.Log("Locked: ");
-
                 this.paused = true;
-                // TODO: Display the correct text
-                this.gameOverPanel.SetActive(true);
+
+                this.gameOverUI.Toggle(true);
+                this.gameOverUI.ActivateDraw();
             }
 
             this.turn = (this.turn + 1) % this.players.Length;
