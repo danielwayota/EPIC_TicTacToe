@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject cellPrefab;
 
-    [Header("Panel")]
+    [Header("Panels")]
     public GameOverUI gameOverUI;
+    public StartUpPanel startupPanel;
 
     private Player[] players;
 
@@ -49,11 +50,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        this.gameOverUI.Toggle(false);
-
         this.size = Config.current.size == BoardSize.SMALL ? 3 : 4;
 
-        this.paused = false;
+        this.paused = true;
 
         this.cameraController = FindObjectOfType<CameraController>();
         this.cameraController.SetSize(this.size);
@@ -83,6 +82,12 @@ public class GameManager : MonoBehaviour
         }
 
         this.SetUpPlayers();
+
+        // UI stuff
+        this.gameOverUI.Toggle(false);
+
+        this.startupPanel.gameObject.SetActive(true);
+        this.startupPanel.DisplayStartTurn(this.turn);
     }
 
     /// ===========================================
@@ -156,6 +161,17 @@ public class GameManager : MonoBehaviour
 
             this.turn = (this.turn + 1) % this.players.Length;
         }
+    }
+
+    /// ===========================================
+    /// <summary>
+    ///
+    /// </summary>
+    public void StartGame()
+    {
+        this.paused = false;
+
+        Destroy(this.startupPanel.gameObject);
     }
 
     /// ===========================================
