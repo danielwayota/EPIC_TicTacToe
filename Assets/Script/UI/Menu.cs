@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour
     /// ===========================================
     void Start()
     {
+        ScoreStorage.Reset();
+
         this.config = Config.current;
         DontDestroyOnLoad(this.config.gameObject);
 
@@ -36,6 +38,15 @@ public class Menu : MonoBehaviour
             case BoardSize.BIG:
                 this.size4x4.isOn = true;
                 break;
+        }
+    }
+
+    /// ===========================================
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
