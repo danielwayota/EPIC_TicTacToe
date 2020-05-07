@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570d0fbf777964c4092c9d70c79387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openSpeed: 1
+  openSpeed: 2
 --- !u!1 &620304050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,6 +1295,9 @@ MonoBehaviour:
   gameOverUI: {fileID: 620304054}
   startupPanel: {fileID: 1904674182}
   soundPlayer: {fileID: 1977147220}
+  explosionPrefabs:
+  - {fileID: 5428028662079514969, guid: b399d29f174ad4a4fb5040a1cc4f6694, type: 3}
+  - {fileID: 7213579879471060240, guid: 27984c2b735107c42a241517fe45f405, type: 3}
 --- !u!114 &746392569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4392,7 +4395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rumbleSpeed: 64
-  rumbleAmplitude: 0.03
+  rumbleAmplitude: 0.05
 --- !u!1 &2042329616
 GameObject:
   m_ObjectHideFlags: 0

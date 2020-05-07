@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public StartUpPanel startupPanel;
     public SoundPlayer soundPlayer;
 
+    public GameObject[] explosionPrefabs;
+
     private Player[] players;
 
     // GamePlay
@@ -198,6 +200,10 @@ public class GameManager : MonoBehaviour
 
             this.cameraController.Rumble();
             this.soundPlayer.Play();
+
+            var go = Instantiate(this.explosionPrefabs[this.turn], cell.transform.position, Quaternion.identity);
+
+            Destroy(go, 2f);
 
             return true;
         }
