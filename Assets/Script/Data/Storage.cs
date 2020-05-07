@@ -12,7 +12,24 @@ public class Storage
         }
     }
 
-    public static bool mutedSound { get; set; } = false;
+    public static bool _mutedSound;
+    public static bool mutedSound
+    {
+        get => _mutedSound;
+        set
+        {
+            _mutedSound = value;
+
+            PlayerPrefs.SetInt("mutedSound", _mutedSound ? 1 : 0);
+        }
+    }
+
+    static Storage()
+    {
+        var storedValue = PlayerPrefs.GetInt("mutedSound", 0);
+
+        _mutedSound = storedValue == 1 ? true : false;
+    }
 
     public static void ResetScores()
     {

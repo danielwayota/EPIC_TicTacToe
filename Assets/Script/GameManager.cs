@@ -13,12 +13,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject cellPrefab;
 
+    public GameObject[] explosionPrefabs;
+
     [Header("Misc")]
     public GameOverUI gameOverUI;
     public StartUpPanel startupPanel;
     public SoundPlayer soundPlayer;
-
-    public GameObject[] explosionPrefabs;
+    public SoundPlayer finalSoundPlayer;
 
     private Player[] players;
 
@@ -151,19 +152,57 @@ public class GameManager : MonoBehaviour
 
                 this.paused = true;
 
-                this.gameOverUI.Toggle(true);
-                this.gameOverUI.ActivateVictory(this.turn);
+                Invoke("ShowVictoryExplosion", .5f);
+                Invoke("ShowVictory", 2f);
             }
             else if (this.CheckGameOver())
             {
                 this.paused = true;
 
-                this.gameOverUI.Toggle(true);
-                this.gameOverUI.ActivateDraw();
+                Invoke("ShowGameOver", 1f);
             }
-
-            this.turn = (this.turn + 1) % this.players.Length;
+            else
+            {
+                this.turn = (this.turn + 1) % this.players.Length;
+            }
         }
+    }
+
+    /// ===========================================
+    /// <summary>
+    ///
+    /// </summary>
+    void ShowVictoryExplosion()
+    {
+        foreach(var (i, j) in this.finalLine.points)
+        {
+            var cell = this.cells[i, j];
+
+            var go = Instantiate(this.explosionPrefabs[this.turn], cell.transform.position, Quaternion.identity);
+            Destroy(go, 2f);
+        }
+
+        this.finalSoundPlayer.Play();
+    }
+
+    /// ===========================================
+    /// <summary>
+    ///
+    /// </summary>
+    void ShowVictory()
+    {
+        this.gameOverUI.Toggle(true);
+        this.gameOverUI.ActivateVictory(this.turn);
+    }
+
+    /// ===========================================
+    /// <summary>
+    ///
+    /// </summary>
+    void ShowGameOver()
+    {
+        this.gameOverUI.Toggle(true);
+        this.gameOverUI.ActivateDraw();
     }
 
     /// ===========================================
@@ -202,7 +241,6 @@ public class GameManager : MonoBehaviour
             this.soundPlayer.Play();
 
             var go = Instantiate(this.explosionPrefabs[this.turn], cell.transform.position, Quaternion.identity);
-
             Destroy(go, 2f);
 
             return true;

@@ -10,7 +10,6 @@ public class SoundToggle : MonoBehaviour
 
     public void ToggleSoundMuted(bool v)
     {
-        Debug.Log(v);
         Storage.mutedSound = v;
     }
 }

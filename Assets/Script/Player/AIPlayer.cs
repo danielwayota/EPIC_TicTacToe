@@ -7,6 +7,8 @@ public class AIPlayer : Player
 
     private List<(int, int)> emptySpots;
 
+    private float time = 1f;
+
     /// ===========================================
     public AIPlayer(CellPlayer state, GameObject piecePrefab, GameManager manager)
         : base(state, piecePrefab, manager)
@@ -17,6 +19,13 @@ public class AIPlayer : Player
     /// ===========================================
     public override bool DoTheTurn()
     {
+        if (this.time > 0f)
+        {
+            this.time -= Time.deltaTime;
+
+            return false;
+        }
+
         this.emptySpots.Clear();
         var size = this.manager.board.GetLength(0);
 
@@ -36,6 +45,7 @@ public class AIPlayer : Player
 
         this.manager.AllocatePiece(x, y, this);
 
+        this.time = 1f;
         return true;
     }
 }
