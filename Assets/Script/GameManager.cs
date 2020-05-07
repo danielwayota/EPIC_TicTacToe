@@ -195,6 +195,8 @@ public class GameManager : MonoBehaviour
 
             cell.Disable();
 
+            this.cameraController.Rumble();
+
             return true;
         }
 

@@ -3962,6 +3962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767a920430e9df04dacae25cf1e98031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rumbleSpeed: 64
+  rumbleAmplitude: 0.03
 --- !u!1 &2042329616
 GameObject:
   m_ObjectHideFlags: 0
