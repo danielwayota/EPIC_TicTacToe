@@ -1,18 +1,20 @@
 using UnityEngine;
 
-public class ScoreStorage
+public class Storage
 {
     private static int[] _scores;
     public static int[] scores
     {
         get {
             if (_scores == null)
-                Reset();
+                ResetScores();
             return _scores;
         }
     }
 
-    public static void Reset()
+    public static bool mutedSound { get; set; } = false;
+
+    public static void ResetScores()
     {
         _scores = new int[2];
     }
@@ -20,7 +22,7 @@ public class ScoreStorage
     public static void PlayerWin(int playerIndex)
     {
         if (_scores == null)
-            Reset();
+            ResetScores();
 
         _scores[playerIndex]++;
     }

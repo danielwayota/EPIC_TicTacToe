@@ -10,12 +10,14 @@ public class Menu : MonoBehaviour
     public Toggle size3x3;
     public Toggle size4x4;
 
+    public Toggle soundToggle;
+
     private Config config;
 
     /// ===========================================
     void Start()
     {
-        ScoreStorage.Reset();
+        Storage.ResetScores();
 
         this.config = Config.current;
         DontDestroyOnLoad(this.config.gameObject);
@@ -39,6 +41,8 @@ public class Menu : MonoBehaviour
                 this.size4x4.isOn = true;
                 break;
         }
+
+        this.soundToggle.isOn = Storage.mutedSound;
     }
 
     /// ===========================================
@@ -84,6 +88,12 @@ public class Menu : MonoBehaviour
         {
             this.config.size = BoardSize.BIG;
         }
+    }
+
+    /// ===========================================
+    public void ToggleSound(bool v)
+    {
+        Storage.mutedSound = v;
     }
 
     /// ===========================================

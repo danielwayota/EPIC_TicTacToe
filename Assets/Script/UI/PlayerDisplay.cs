@@ -27,7 +27,7 @@ public class PlayerDisplay : MonoBehaviour
     public void UpdateScores()
     {
         int i = 0;
-        foreach (var score in ScoreStorage.scores)
+        foreach (var score in Storage.scores)
         {
             this.scoreLabels[i].text = score.ToString();
             i++;

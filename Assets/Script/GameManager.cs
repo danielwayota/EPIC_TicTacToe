@@ -13,9 +13,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject cellPrefab;
 
-    [Header("Panels")]
+    [Header("Misc")]
     public GameOverUI gameOverUI;
     public StartUpPanel startupPanel;
+    public SoundPlayer soundPlayer;
 
     private Player[] players;
 
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
 
             if (this.finalLine != null)
             {
-                ScoreStorage.PlayerWin(this.turn);
+                Storage.PlayerWin(this.turn);
                 this.playerDisplay.UpdateScores();
 
                 this.paused = true;
@@ -196,6 +197,7 @@ public class GameManager : MonoBehaviour
             cell.Disable();
 
             this.cameraController.Rumble();
+            this.soundPlayer.Play();
 
             return true;
         }
